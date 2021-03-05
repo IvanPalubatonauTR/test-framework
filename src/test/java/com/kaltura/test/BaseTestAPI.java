@@ -1,16 +1,14 @@
-package com.epam.test.api.restassured;
+package com.kaltura.test;
 
-import com.epam.core.config.AppConfig;
-import com.epam.core.rest.rest.SpecManager;
+import com.kaltura.core.config.AppConfig;
+import com.kaltura.core.rest.SpecManager;
+import com.kaltura.core.utills.ObjectMapperHelper;
 import io.restassured.specification.RequestSpecification;
+import org.assertj.core.api.SoftAssertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @ContextConfiguration(classes = AppConfig.class)
 public class BaseTestAPI extends AbstractTestNGSpringContextTests {
@@ -18,7 +16,12 @@ public class BaseTestAPI extends AbstractTestNGSpringContextTests {
     @Autowired
     SpecManager specManager;
 
+    @Autowired
+    ObjectMapperHelper objectMapperHelper;
+
     protected RequestSpecification spec;
+
+    protected SoftAssertions soft = new SoftAssertions();
 
     @BeforeClass
     public void initSpec() {

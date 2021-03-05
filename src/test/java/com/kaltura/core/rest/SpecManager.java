@@ -1,4 +1,4 @@
-package com.epam.core.rest.rest;
+package com.kaltura.core.rest;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -12,15 +12,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpecManager {
 
-    @Value("${rp.local}")
-    private String rpURL;
+    @Value("${kaltura.url}")
+    private String kalturaURL;
+    @Value("${common.user.service.uri}")
+    private String userServiceUri;
 
     public RequestSpecification initSpec() {
 
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
-                .addHeader("Authorization", "Bearer " + System.getenv("RP_API_TOKEN"))
-                .setBaseUri(rpURL + "/api/v1/")
+                .setBaseUri(kalturaURL + userServiceUri)
                 .setUrlEncodingEnabled(false)
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
